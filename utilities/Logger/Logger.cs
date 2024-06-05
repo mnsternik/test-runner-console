@@ -9,6 +9,8 @@ namespace FirstConsoleApp
             string fileName = DateTime.Now.ToString("ddMMyyyy") + ".txt";
             LogsPath = Path.Combine(folderPath, fileName);
 
+            Directory.CreateDirectory(folderPath); 
+
             string text = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + ": " + "Rozpoczędzie działania programu";
             using (StreamWriter outputFile = new StreamWriter(LogsPath))
             {
