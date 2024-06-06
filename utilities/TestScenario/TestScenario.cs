@@ -1,6 +1,4 @@
-using System.Reflection.Metadata.Ecma335;
-
-namespace FirstConsoleApp
+namespace TestRunnerConsole
 {
     public class TestScenario
     {

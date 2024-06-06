@@ -1,4 +1,4 @@
-﻿﻿namespace FirstConsoleApp;
+﻿﻿namespace TestRunnerConsole;
 
 class Program
 {
@@ -8,6 +8,7 @@ class Program
         {   
             Config c = ConfigManager.GetConfig(); 
             Logger.InitLogger(c.LogsFolderPath); 
+            // TestRunner nie powinien być klasą statyczną. Logger może też nie. 
             TestRunner.InitDriverWithOptions(c); 
             TestRunner.Run(c.TestScenarioPath); 
         }

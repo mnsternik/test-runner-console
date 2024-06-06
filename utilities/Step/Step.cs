@@ -1,6 +1,6 @@
 using OpenQA.Selenium;
 
-namespace FirstConsoleApp
+namespace TestRunnerConsole
 {
     public class Step(string name, string actionType, string? elementXPath, string? elementId, string? backupScenarioPath)
     {

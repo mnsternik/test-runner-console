@@ -1,6 +1,6 @@
 using OpenQA.Selenium.Firefox;
 
-namespace FirstConsoleApp
+namespace TestRunnerConsole
 {
     public class TestRunner
     {

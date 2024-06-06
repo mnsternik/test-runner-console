@@ -1,4 +1,4 @@
-namespace FirstConsoleApp
+namespace TestRunnerConsole
 {
     public class Logger
     {

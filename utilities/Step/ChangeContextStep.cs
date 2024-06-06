@@ -1,6 +1,6 @@
 using OpenQA.Selenium;
 
-namespace FirstConsoleApp
+namespace TestRunnerConsole
 {
     public class ContextChangeStep(GenericStep step) : Step(step.Name, step.ActionType, step.ElementXPath, step.ElementId, step.BackupScenarioPath)
     {

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace FirstConsoleApp
+namespace TestRunnerConsole
 {
     public class JSONFileReader
     {
