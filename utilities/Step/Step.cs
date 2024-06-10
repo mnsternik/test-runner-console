@@ -32,17 +32,44 @@ namespace TestRunnerConsole
             }
         }
 
-        public void HandleFailure(Exception e)
+        public void ExectueAndLog()
         {
-            Logger.Log(e.Message);
+            try
+            {
+                Logger.Log($"Wykonywanie kroku: {Name}");
+                HandleAction();
+                Logger.Log($"{Name} -> OK");
+            }
+            catch (NoSuchElementException e)
+            {
+                Logger.Log($"Wystąpił błąd - nie znaleziono elementu na stronie. {e}");
+                HandleFailure();
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Wystąpił nieoczekiwany błąd: {e}");
+                HandleFailure();
+            }
+
+        }
+
+        public void HandleFailure()
+        {
             if (!string.IsNullOrEmpty(BackupScenarioPath))
             {
-                Logger.Log("Przełączanie scenariusza testowego...");
                 TestRunner.Run(BackupScenarioPath);
             }
-            else 
+            else
             {
-                throw new Exception("Wykonywanie scenariusza przerwane.");
+                // bool shouldContiniue = ManualStep.AskForUserConfirmation(); // or should retry also
+                string? shouldContiniue;
+                Console.WriteLine("Wystąpił błąd - wpisz 'Y' by przejść do następnego kroku, lub 'N' by zakończyć działanie programu");
+                shouldContiniue = Console.ReadLine();
+
+                if (shouldContiniue?.ToLower() != "y")
+                {
+                    throw new Exception("Wykonywanie scenariusza przerwane.");
+                }
             }
         }
     }
