@@ -7,6 +7,10 @@ namespace TestRunnerConsole
         private static List<Step> Steps { get; set; } = new List<Step>();
         public static FirefoxDriver? Driver { get; set; }
 
+        // numer kroku będzie zwiększany w metodzie Run, w razie błędu będzie informował, w którym kroku był błąd, będzie też pozwalał wznowić wykonywanie od danego kroku.
+        // w przypadku załadowania nowego scenariusza testowego powinien zostać wyzerowany. 
+        private static int StepCounter = 0; 
+
         public static void Run(string testScenarioPath)
         {
             TestScenario ts = TestScenario.LoadScenario(testScenarioPath);
@@ -16,15 +20,9 @@ namespace TestRunnerConsole
             Logger.Log($"Uruchamianie scenariusza testowego: {ts.Name}", true);
             foreach (var step in Steps)
             {
-                PerfromAndLogStep(step);
+                step.ExectueAndLog();
+                StepCounter++; 
             }
-        }
-
-        private static void PerfromAndLogStep(Step s)
-        {
-            Logger.Log($"Wykonywanie kroku: {s.Name}");
-            s.HandleAction();
-            Logger.Log($"{s.Name} -> OK", true);
         }
 
         public static List<Step> CreateListOfSteps(TestScenario ts)
