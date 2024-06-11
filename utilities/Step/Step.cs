@@ -10,7 +10,54 @@ namespace TestRunnerConsole
         public string? ElementId { get; set; } = elementId;
         public string? BackupScenarioPath { get; set; } = backupScenarioPath;
 
-        public virtual void HandleAction() { }
+        public void ExectueAndLog()
+        {
+            try
+            {
+                Logger.Log($"Wykonywanie kroku: {Name}");
+                HandleAction();
+                Logger.Log($"{Name} -> OK", true);
+            }
+            catch (InavlidVerificationException e)
+            {
+                Logger.Log($"Wystąpił błąd podczas weryfikacji. {e.Message}", true);
+                HandleFailure();
+            }
+            catch (NoSuchElementException e)
+            {
+                Logger.Log($"Wystąpił błąd - nie znaleziono elementu na stronie. {e.Message}", true);
+                HandleFailure();
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Wystąpił nieoczekiwany błąd: {e.Message}", true);
+                HandleFailure();
+            }
+        }
+
+        public virtual void HandleAction() 
+        { 
+
+        }
+
+        public void HandleFailure()
+        {
+            if (!string.IsNullOrEmpty(BackupScenarioPath))
+            {
+                TestRunner.Run(BackupScenarioPath);
+            }
+            else
+            {
+                //char continiueDecision = UserInputUtility.GetUserDecision();
+                // retry/stop/next if next => ExecuteAndLog(); 
+                bool shouldContiniue = UserInputUtility.AskForUserConfirmation();
+                if (!shouldContiniue)
+                {
+                    throw new Exception("Wykonywanie scenariusza przerwane. Koniec działania programu.");
+                }
+            }
+        }
+
         public virtual IWebElement GetElement()
         {
             if (TestRunner.Driver == null)
@@ -29,47 +76,6 @@ namespace TestRunnerConsole
             else
             {
                 throw new InavlidStepParameterException($"Wykryto próbe odnalezienia elementu bez podania jego ID lub XPath - potrzebna weryfikacja poprawności scenariusza testowego.");
-            }
-        }
-
-        public void ExectueAndLog()
-        {
-            try
-            {
-                Logger.Log($"Wykonywanie kroku: {Name}");
-                HandleAction();
-                Logger.Log($"{Name} -> OK");
-            }
-            catch (NoSuchElementException e)
-            {
-                Logger.Log($"Wystąpił błąd - nie znaleziono elementu na stronie. {e}");
-                HandleFailure();
-            }
-            catch (Exception e)
-            {
-                Logger.Log($"Wystąpił nieoczekiwany błąd: {e}");
-                HandleFailure();
-            }
-
-        }
-
-        public void HandleFailure()
-        {
-            if (!string.IsNullOrEmpty(BackupScenarioPath))
-            {
-                TestRunner.Run(BackupScenarioPath);
-            }
-            else
-            {
-                // bool shouldContiniue = ManualStep.AskForUserConfirmation(); // or should retry also
-                string? shouldContiniue;
-                Console.WriteLine("Wystąpił błąd - wpisz 'Y' by przejść do następnego kroku, lub 'N' by zakończyć działanie programu");
-                shouldContiniue = Console.ReadLine();
-
-                if (shouldContiniue?.ToLower() != "y")
-                {
-                    throw new Exception("Wykonywanie scenariusza przerwane.");
-                }
             }
         }
     }
