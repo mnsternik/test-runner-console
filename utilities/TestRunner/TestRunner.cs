@@ -6,9 +6,6 @@ namespace TestRunnerConsole
     {
         private static List<Step> Steps { get; set; } = new List<Step>();
         public static FirefoxDriver? Driver { get; set; }
-
-        // numer kroku będzie zwiększany w metodzie Run, w razie błędu będzie informował, w którym kroku był błąd, będzie też pozwalał wznowić wykonywanie od danego kroku.
-        // w przypadku załadowania nowego scenariusza testowego powinien zostać wyzerowany. 
         private static int StepCounter = 0; 
 
         public static void Run(string testScenarioPath)
@@ -23,6 +20,8 @@ namespace TestRunnerConsole
                 step.ExectueAndLog();
                 StepCounter++; 
             }
+
+            // some ending
         }
 
         public static List<Step> CreateListOfSteps(TestScenario ts)
@@ -30,13 +29,13 @@ namespace TestRunnerConsole
             List<Step> steps = new List<Step>();
             if (ts.Steps == null)
             {
+                // invalid scenario exception?
                 throw new Exception("Scenariusz testowy nie zawiera żadnych kroków testowych.");
             }
             foreach (var step in ts.Steps)
             {
                 steps.Add(TransformGenericIntoSpecifedStep(step));
             }
-
             return steps;
         }
 
@@ -48,7 +47,7 @@ namespace TestRunnerConsole
                 "click" => new ClickStep(step),
                 "select" => new SelectStep(step),
                 "verify" => new VerifyStep(step),
-                "iframe-change" => new ContextChangeStep(step),
+                "iframe-change" => new ChangeContextStep(step),
                 "manual" => new ManualStep(step),
                 "write" or "write-login" or "write-password" => new WriteStep(step),
                 _ => throw new Exception($"Nieprawidłowy rodzaj akcji ActionType: '{step.ActionType}'"),
