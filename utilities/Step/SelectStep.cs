@@ -1,3 +1,4 @@
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace TestRunnerConsole
@@ -8,6 +9,11 @@ namespace TestRunnerConsole
         public string Value { get; set; } = step.Value ?? "";
 
         public override void HandleAction()
+        {
+            HandleSelect();
+        }
+
+        private void HandleSelect()
         {
             var selectElement = new SelectElement(GetElement());
 
@@ -20,11 +26,13 @@ namespace TestRunnerConsole
                     selectElement.SelectByText(Value);
                     break;
                 case "index":
-                    selectElement.SelectByIndex(Convert.ToInt32(Value)); 
-                    break; 
+                    selectElement.SelectByIndex(Convert.ToInt32(Value));
+                    break;
                 default:
                     throw new InavlidStepParameterException($"Wskazano niepoprawny paramter 'OptionType': '{OptionType}', dostępne opcje to 'value', 'text', 'index'");
             }
         }
     }
 }
+
+

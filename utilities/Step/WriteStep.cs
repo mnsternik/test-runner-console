@@ -8,19 +8,24 @@ namespace TestRunnerConsole
 
         public override void HandleAction()
         {
+            HandleWrite();
+        }
+
+        private void HandleWrite()
+        {
             IWebElement element = GetElement();
             string targetValue;
 
             switch (ActionType)
             {
                 case "write-password":
-                    targetValue = UserCredentialUtility.ConvertSecureStringToString(UserCredentialUtility.ReadPassword());
+                    targetValue = UserInputUtility.ConvertSecureStringToString(UserInputUtility.ReadPassword());
                     break;
                 case "write-login":
-                    targetValue = UserCredentialUtility.ReadLogin();
+                    targetValue = UserInputUtility.ReadLogin();
                     break;
                 default:
-                    targetValue = Value; 
+                    targetValue = Value;
                     break;
             }
 

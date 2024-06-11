@@ -13,14 +13,7 @@ namespace TestRunnerConsole
         public override void HandleAction()
         {
             Element = CheckInsideSelect ? GetOptionInsideSelectElement() : GetElement();
-            try
-            {
-                VerifyBasedOnCheckType();
-            }
-            catch (InavlidVerificationException e)
-            {
-                HandleFailure(e);
-            }
+            VerifyBasedOnCheckType();
         }
 
         public void VerifyBasedOnCheckType()
@@ -55,14 +48,14 @@ namespace TestRunnerConsole
             }
             else
             {
-                throw new InavlidVerificationException($"Błąd weryfikacji - nie znaleziono elemenetu z ID {ElementId}");
+                throw new InavlidVerificationException($"Nie znaleziono elemenetu z ID {ElementId}");
             }
         }
 
         private void AssertTextIsNot()
         {
-            bool isTextValid = WaitForAndCheckCondtition(driver => 
-                Element?.Text != ExpectedValue 
+            bool isTextValid = WaitForAndCheckCondtition(driver =>
+                Element?.Text != ExpectedValue
                 && !string.IsNullOrEmpty(Element?.Text)
             );
 
@@ -72,7 +65,7 @@ namespace TestRunnerConsole
             }
             else
             {
-                throw new InavlidVerificationException($"Błąd weryfikacji - oczekiwano tekstu innego niż '{ExpectedValue}', znaleziono tekst '{Element?.Text}'");
+                throw new InavlidVerificationException($"Oczekiwano tekstu innego niż '{ExpectedValue}', znaleziono tekst '{Element?.Text}'");
             }
         }
 
@@ -85,14 +78,14 @@ namespace TestRunnerConsole
             }
             else
             {
-                throw new InavlidVerificationException($"Błąd weryfikacji - oczekiwano tekstu '{ExpectedValue}', znaleziono tekst '{Element?.Text}'");
+                throw new InavlidVerificationException($"Oczekiwano tekstu '{ExpectedValue}', znaleziono tekst '{Element?.Text}'");
             }
         }
 
         private void AssertValueIsNot()
         {
-            bool isValueValid = WaitForAndCheckCondtition(driver => 
-                Element?.GetAttribute("value") != ExpectedValue 
+            bool isValueValid = WaitForAndCheckCondtition(driver =>
+                Element?.GetAttribute("value") != ExpectedValue
                 && !string.IsNullOrEmpty(Element?.GetAttribute("Value"))
             );
 
@@ -102,7 +95,7 @@ namespace TestRunnerConsole
             }
             else
             {
-                throw new InavlidVerificationException($"Błąd weryfikacji - oczekiwano wartości innej niż '{ExpectedValue}', znaleziono wartość '{Element?.GetAttribute("value")}'");
+                throw new InavlidVerificationException($"Oczekiwano wartości innej niż '{ExpectedValue}', znaleziono wartość '{Element?.GetAttribute("value")}'");
             }
         }
 
@@ -115,7 +108,7 @@ namespace TestRunnerConsole
             }
             else
             {
-                throw new InavlidVerificationException($"Błąd weryfikacji - oczekiwano wartości '{ExpectedValue}', znaleziono wartość '{Element?.GetAttribute("value")}'");
+                throw new InavlidVerificationException($"Oczekiwano wartości '{ExpectedValue}', znaleziono wartość '{Element?.GetAttribute("value")}'");
             }
         }
 
