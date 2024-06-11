@@ -3,8 +3,36 @@ using System.Security;
 
 namespace TestRunnerConsole
 {
-    public class UserCredentialUtility
+    public class UserInputUtility
     {
+
+        public static bool AskForUserConfirmation(string message = "")
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                Logger.Log(message); 
+            }
+
+            Logger.Log("Wstrzymano wykonywanie scenariusza testowego. Wpisz 'Y' by wznowić, lub 'N' by zakończyć:");
+            string? input = Console.ReadLine()?.Trim().ToUpper();
+
+            while (true)
+            {
+                if (input == "Y")
+                {
+                    Logger.Log("Wybrano 'Y' - scenariusz zostanie wznonwiony");
+                    return true;
+                }
+                else if (input == "N")
+                {
+                    Logger.Log("Wybrano 'N' - działanie programu zostanie zakończone");
+                    return false;
+                }
+                Logger.Log("Wprowadzono niepoprawną odpowiedź - wprowadź 'Y' by kontynuować lub 'N' by przerwać: ");
+                input = Console.ReadLine()?.Trim().ToUpper();
+            }
+        }
+
         public static SecureString ReadPassword()
         {
             Boolean isDebugger = false;
