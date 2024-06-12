@@ -10,7 +10,7 @@ namespace TestRunnerConsole
         public string? ElementId { get; set; } = elementId;
         public string? BackupScenarioPath { get; set; } = backupScenarioPath;
 
-        public void ExectueAndLog()
+        public void ExecuteAndLog()
         {
             try
             {
@@ -35,10 +35,9 @@ namespace TestRunnerConsole
             }
         }
 
-        public virtual void HandleAction() 
-        { 
 
-        }
+        // Każdy klasa pochodna posiada własną implementacje metody HandleAction
+        public virtual void HandleAction() {}
 
         public void HandleFailure()
         {
@@ -48,12 +47,14 @@ namespace TestRunnerConsole
             }
             else
             {
-                //char continiueDecision = UserInputUtility.GetUserDecision();
-                // retry/stop/next if next => ExecuteAndLog(); 
-                bool shouldContiniue = UserInputUtility.AskForUserConfirmation();
-                if (!shouldContiniue)
+                string decision = GetFailureDecisionFromUser();
+                if (decision == "N")
                 {
                     throw new Exception("Wykonywanie scenariusza przerwane. Koniec działania programu.");
+                }
+                else if (decision == "R")
+                {
+                    ExecuteAndLog(); 
                 }
             }
         }
@@ -76,6 +77,23 @@ namespace TestRunnerConsole
             else
             {
                 throw new InavlidStepParameterException($"Wykryto próbe odnalezienia elementu bez podania jego ID lub XPath - potrzebna weryfikacja poprawności scenariusza testowego.");
+            }
+        }
+
+        private string GetFailureDecisionFromUser()
+        {
+            Logger.Log("Wstrzymano wykonywanie scenariusza testowego. Wpisz 'Y' by przejść do kolejnego kroku, 'R' by spróbować wykonać krok ponownie, lub 'N' by zakończyć:';");
+            string? input = Console.ReadLine()?.Trim().ToUpper();
+
+            while (true)
+            {
+                if (input == "Y" || input == "N" || input == "R")
+                {
+                    Logger.Log($"Udzielono odpowiedzi: {input}", true);
+                    return input;
+                }
+                Logger.Log("Wprowadzono niepoprawną odpowiedź - wprowadź 'Y' by kontynuować lub 'N' by przerwać: ");
+                input = Console.ReadLine()?.Trim().ToUpper();
             }
         }
     }
