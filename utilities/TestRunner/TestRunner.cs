@@ -17,11 +17,11 @@ namespace TestRunnerConsole
             Logger.Log($"Uruchamianie scenariusza testowego: {ts.Name}", true);
             foreach (var step in Steps)
             {
-                step.ExectueAndLog();
+                step.ExecuteAndLog();
                 StepCounter++; 
             }
 
-            // some ending
+            // summary here
         }
 
         public static List<Step> CreateListOfSteps(TestScenario ts)
