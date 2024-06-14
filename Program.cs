@@ -8,17 +8,20 @@ class Program
         {   
             Config c = ConfigManager.GetConfig(); 
             Logger.InitLogger(c.LogsFolderPath); 
-            // TestRunner nie powinien być klasą statyczną. Logger może też nie. 
-            TestRunner.InitDriverWithOptions(c); 
+            TestRunner.InitDriverWithOptions(c); // move this to Run method?
             TestRunner.Run(c.TestScenarioPath); 
+        }
+        catch (FailedStepException e)
+        {
+            Logger.Log(e.Message); 
         }
         catch (Exception e)
         {
-            // TO CONSIDER: dodać flage result, kiedy pojawi sie jakiś exception to zmieniać na false, i w finally jeżeli jest nadal true to znaczy że test zakończony pozytywnie
-            // Logger.Log("Error: " + e.Message);
+            Logger.Log($"Wystąpił nieoczekiwany błąd. Zakończenie pracy programu. Błąd: {e.Message}");
         }
         finally
         {
+            Logger.Log(Summary.CreateSummary()); 
         }
     }
 }
