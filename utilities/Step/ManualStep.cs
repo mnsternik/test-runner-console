@@ -4,7 +4,7 @@ namespace TestRunnerConsole
     {
         public override void HandleAction()
         {
-            UserInputUtility.AskForUserConfirmation(); 
+            UserInputUtility.GetConfirmationFromUser(); 
         }
     }
 }

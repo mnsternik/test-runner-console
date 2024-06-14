@@ -5,12 +5,11 @@ namespace TestRunnerConsole
 {
     public class UserInputUtility
     {
-
-        public static bool AskForUserConfirmation(string message = "")
+        public static bool GetConfirmationFromUser(string message = "")
         {
             if (!string.IsNullOrEmpty(message))
             {
-                Logger.Log(message); 
+                Logger.Log(message);
             }
 
             Logger.Log("Wstrzymano wykonywanie scenariusza testowego. Wpisz 'Y' by wznowić, lub 'N' by zakończyć:");
@@ -27,6 +26,23 @@ namespace TestRunnerConsole
                 {
                     Logger.Log("Wybrano 'N' - działanie programu zostanie zakończone");
                     return false;
+                }
+                Logger.Log("Wprowadzono niepoprawną odpowiedź - wprowadź 'Y' by kontynuować lub 'N' by przerwać: ");
+                input = Console.ReadLine()?.Trim().ToUpper();
+            }
+        }
+
+        public static string GetFailureDecisionFromUser()
+        {
+            Logger.Log("Wstrzymano wykonywanie scenariusza testowego. Wpisz 'Y' by przejść do kolejnego kroku, 'R' by spróbować wykonać krok ponownie, lub 'N' by zakończyć:';");
+            string? input = Console.ReadLine()?.Trim().ToUpper();
+
+            while (true)
+            {
+                if (input == "Y" || input == "N" || input == "R")
+                {
+                    Logger.Log($"Udzielono odpowiedzi: {input}", true);
+                    return input;
                 }
                 Logger.Log("Wprowadzono niepoprawną odpowiedź - wprowadź 'Y' by kontynuować lub 'N' by przerwać: ");
                 input = Console.ReadLine()?.Trim().ToUpper();
@@ -69,7 +85,7 @@ namespace TestRunnerConsole
             }
         }
 
-        public static String ReadLogin()
+        public static string ReadLogin()
         {
             string? login;
             Console.WriteLine("Wprowadź login i kliknij Enter:");
