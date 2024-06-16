@@ -6,22 +6,21 @@ namespace TestRunnerConsole
     {
         private static List<Step> Steps { get; set; } = new List<Step>();
         public static FirefoxDriver? Driver { get; set; }
-        private static int StepCounter = 0; 
+        private static int StepCounter = 0;
 
         public static void Run(string testScenarioPath)
         {
             TestScenario ts = TestScenario.LoadScenario(testScenarioPath);
+
             Steps.Clear();
             Steps = CreateListOfSteps(ts);
 
             Logger.Log($"Uruchamianie scenariusza testowego: {ts.Name}", true);
             foreach (var step in Steps)
             {
-                step.ExecuteAndLog();
-                StepCounter++; 
+                step.ExecuteAndLog(StepCounter);
+                StepCounter++;
             }
-
-            // summary here
         }
 
         public static List<Step> CreateListOfSteps(TestScenario ts)
@@ -29,8 +28,7 @@ namespace TestRunnerConsole
             List<Step> steps = new List<Step>();
             if (ts.Steps == null)
             {
-                // invalid scenario exception?
-                throw new Exception("Scenariusz testowy nie zawiera żadnych kroków testowych.");
+                throw new InvalidScenarioException("Scenariusz testowy nie zawiera żadnych kroków testowych.");
             }
             foreach (var step in ts.Steps)
             {
