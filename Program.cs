@@ -8,7 +8,7 @@ class Program
         {   
             Config c = ConfigManager.GetConfig(); 
             Logger.InitLogger(c.LogsFolderPath); 
-            TestRunner.InitDriverWithOptions(c); // move this to Run method?
+            TestRunner.InitDriverWithOptions(c); 
             TestRunner.Run(c.TestScenarioPath); 
         }
         catch (FailedStepException e)
