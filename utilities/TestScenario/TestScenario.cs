@@ -10,4 +10,9 @@ namespace TestRunnerConsole
             return JSONFileReader.Deserialize<TestScenario>(path);
         }
     }
+
+    public class InvalidScenarioException : Exception
+    {
+        public InvalidScenarioException(string message) : base(message) { }
+    }
 }
