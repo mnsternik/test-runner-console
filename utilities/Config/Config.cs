@@ -2,19 +2,19 @@ namespace TestRunnerConsole
 {
     public class Config
     {
-        public string DriverPath { get; set; } = "";
-        public string FirefoxPath { get; set; } = "";
-        public string TestScenarioPath { get; set; } = "";
-        public string LogsFolderPath { get; set; } = "";
-        public int ElementWaitingTimeout { get; set; } = 0;
+        public static string DriverPath { get; set; } = string.Empty;
+        public static string FirefoxPath { get; set; } = string.Empty;
+        public static string TestScenarioPath { get; set; } = string.Empty;
+        public static string LogsFolderPath { get; set; } = string.Empty;
+        public static int ElementWaitingTimeout { get; set; } = 0;
     }
 
     public class ConfigManager
     {
-        public static Config GetConfig()
+        public static void InitConfig()
         {
             string configPath = GetConfigPath();
-            Config config = JSONFileReader.Deserialize<Config>(configPath);
+            ConfigModel config = JSONFileReader.Deserialize<ConfigModel>(configPath);
 
             if (!File.Exists(config.DriverPath))
             {
@@ -25,7 +25,11 @@ namespace TestRunnerConsole
                 throw new Exception($"Nie znaleziono pliku firefox.exe w lokalizacji {config.FirefoxPath}");
             }
 
-            return config;
+            Config.DriverPath = config.DriverPath; 
+            Config.FirefoxPath = config.FirefoxPath;
+            Config.TestScenarioPath = config.TestScenarioPath;
+            Config.LogsFolderPath = config.LogsFolderPath;  
+            Config.ElementWaitingTimeout = config.ElementWaitingTimeout;
         }
 
         private static string GetConfigPath()
@@ -41,5 +45,15 @@ namespace TestRunnerConsole
 
             return configPath;
         }
+
+        private class ConfigModel
+        {
+            public required string DriverPath { get; set; }
+            public required string FirefoxPath { get; set; }
+            public required string TestScenarioPath { get; set; }
+            public required string LogsFolderPath { get; set; }
+            public int ElementWaitingTimeout { get; set; }
+        }
     }
 }
+
