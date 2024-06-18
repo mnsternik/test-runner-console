@@ -6,10 +6,9 @@ class Program
     {
         try
         {   
-            Config c = ConfigManager.GetConfig(); 
-            Logger.InitLogger(c.LogsFolderPath); 
-            TestRunner.InitDriverWithOptions(c); 
-            TestRunner.Run(c.TestScenarioPath); 
+            ConfigManager.InitConfig(); 
+            Logger.InitLogger(); 
+            TestRunner.Run(Config.TestScenarioPath); 
         }
         catch (FailedStepException e)
         {
