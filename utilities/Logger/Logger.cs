@@ -2,14 +2,14 @@ namespace TestRunnerConsole
 {
     public class Logger
     {
-        public static string LogsPath { get; set; } = "";
+        public static string LogsPath { get; set; } = string.Empty;
 
-        public static void InitLogger(string folderPath)
+        public static void InitLogger()
         {
             string fileName = DateTime.Now.ToString("ddMMyyyy") + ".txt";
-            LogsPath = Path.Combine(folderPath, fileName);
+            LogsPath = Path.Combine(Config.LogsFolderPath, fileName);
 
-            Directory.CreateDirectory(folderPath); 
+            Directory.CreateDirectory(Config.LogsFolderPath); 
 
             string text = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + ": " + "Rozpoczędzie działania programu";
             using (StreamWriter outputFile = new StreamWriter(LogsPath))

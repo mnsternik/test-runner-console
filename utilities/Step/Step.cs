@@ -4,8 +4,8 @@ namespace TestRunnerConsole
 {
     public class Step(string name, string actionType, string? elementXPath, string? elementId, string? backupScenarioPath)
     {
-        public string Name { get; set; } = name ?? "";
-        public string ActionType { get; set; } = actionType ?? "";
+        public string Name { get; set; } = name ?? string.Empty;
+        public string ActionType { get; set; } = actionType ?? string.Empty;
         public string? ElementXPath { get; set; } = elementXPath;
         public string? ElementId { get; set; } = elementId;
         public string? BackupScenarioPath { get; set; } = backupScenarioPath;
@@ -14,7 +14,7 @@ namespace TestRunnerConsole
         {
             try
             {
-                Logger.Log($"Wykonywanie kroku: {Name}");
+                Logger.Log($"{stepCounter}. Wykonywanie kroku: {Name}");
                 HandleAction();
                 Logger.Log($"{Name} -> OK", true);
             }

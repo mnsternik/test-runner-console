@@ -6,7 +6,17 @@ namespace TestRunnerConsole
     {
         private static List<Step> Steps { get; set; } = new List<Step>();
         public static FirefoxDriver? Driver { get; set; }
-        private static int StepCounter = 0;
+        private static int _stepCounter = 0;
+
+
+        // Inicalizacja WebDriver'a
+        static TestRunner()
+        {
+            FirefoxOptions options = new FirefoxOptions();
+            options.BinaryLocation = Config.FirefoxPath;
+            Driver = new FirefoxDriver(Config.DriverPath, options);
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Config.ElementWaitingTimeout); // Ustawienie czekania na nieznalezione elementy
+        }
 
         public static void Run(string testScenarioPath)
         {
@@ -18,8 +28,8 @@ namespace TestRunnerConsole
             Logger.Log($"Uruchamianie scenariusza testowego: {ts.Name}", true);
             foreach (var step in Steps)
             {
-                step.ExecuteAndLog(StepCounter);
-                StepCounter++;
+                step.ExecuteAndLog(_stepCounter);
+                _stepCounter++;
             }
         }
 
@@ -50,14 +60,6 @@ namespace TestRunnerConsole
                 "write" or "write-login" or "write-password" => new WriteStep(step),
                 _ => throw new Exception($"Nieprawidłowy rodzaj akcji ActionType: '{step.ActionType}'"),
             };
-        }
-
-        public static void InitDriverWithOptions(Config config)
-        {
-            FirefoxOptions options = new FirefoxOptions();
-            options.BinaryLocation = config.FirefoxPath;
-            Driver = new FirefoxDriver(config.DriverPath, options);
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(config.ElementWaitingTimeout); // Ustawienie czekania na nieznalezione elementy
         }
     }
 }

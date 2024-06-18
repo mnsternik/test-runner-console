@@ -5,14 +5,14 @@ namespace TestRunnerConsole
 {
     public class VerifyStep(GenericStep step) : Step(step.Name, step.ActionType, step.ElementXPath, step.ElementId, step.BackupScenarioPath)
     {
-        public string CheckType { get; set; } = step.CheckType ?? "";
-        public string ExpectedValue { get; set; } = step.ExpectedValue ?? "";
+        public string CheckType { get; set; } = step.CheckType ?? string.Empty;
+        public string ExpectedValue { get; set; } = step.ExpectedValue ?? string.Empty;
         public bool CheckInsideSelect { get; set; } = step.CheckInsideSelect ?? false;
-        private IWebElement? Element { get; set; }
+        private IWebElement? _element; 
 
         public override void HandleAction()
         {
-            Element = CheckInsideSelect ? GetOptionInsideSelectElement() : GetElement();
+            _element = CheckInsideSelect ? GetOptionInsideSelectElement() : GetElement();
             VerifyBasedOnCheckType();
         }
 
@@ -42,7 +42,7 @@ namespace TestRunnerConsole
 
         private void CheckIfElementIsDisplayed()
         {
-            if (Element != null && Element.Displayed)
+            if (_element != null && _element.Displayed)
             {
                 Logger.Log($"Znaleziono element [ID: {ElementId}]");
             }
@@ -55,60 +55,60 @@ namespace TestRunnerConsole
         private void AssertTextIsNot()
         {
             bool isTextValid = WaitForAndCheckCondtition(driver =>
-                Element?.Text != ExpectedValue
-                && !string.IsNullOrEmpty(Element?.Text)
+                _element?.Text != ExpectedValue
+                && !string.IsNullOrEmpty(_element?.Text)
             );
 
             if (isTextValid)
             {
-                Logger.Log($"Sukces: Oczekiwano tekstu innego niż '{ExpectedValue}', znaleziono tekst '{Element?.Text}'");
+                Logger.Log($"Sukces: Oczekiwano tekstu innego niż '{ExpectedValue}', znaleziono tekst '{_element?.Text}'");
             }
             else
             {
-                throw new InavlidVerificationException($"Oczekiwano tekstu innego niż '{ExpectedValue}', znaleziono tekst '{Element?.Text}'");
+                throw new InavlidVerificationException($"Oczekiwano tekstu innego niż '{ExpectedValue}', znaleziono tekst '{_element?.Text}'");
             }
         }
 
         private void AssertTextIs()
         {
-            bool isTextEqualToExpected = WaitForAndCheckCondtition(driver => Element?.Text == ExpectedValue);
+            bool isTextEqualToExpected = WaitForAndCheckCondtition(driver => _element?.Text == ExpectedValue);
             if (isTextEqualToExpected)
             {
-                Logger.Log($"Sukces: Oczekiwano tekstu '{ExpectedValue}', znaleziono tekst '{Element?.Text}'");
+                Logger.Log($"Sukces: Oczekiwano tekstu '{ExpectedValue}', znaleziono tekst '{_element?.Text}'");
             }
             else
             {
-                throw new InavlidVerificationException($"Oczekiwano tekstu '{ExpectedValue}', znaleziono tekst '{Element?.Text}'");
+                throw new InavlidVerificationException($"Oczekiwano tekstu '{ExpectedValue}', znaleziono tekst '{_element?.Text}'");
             }
         }
 
         private void AssertValueIsNot()
         {
             bool isValueValid = WaitForAndCheckCondtition(driver =>
-                Element?.GetAttribute("value") != ExpectedValue
-                && !string.IsNullOrEmpty(Element?.GetAttribute("Value"))
+                _element?.GetAttribute("value") != ExpectedValue
+                && !string.IsNullOrEmpty(_element?.GetAttribute("Value"))
             );
 
             if (isValueValid)
             {
-                Logger.Log($"Sukces: Oczekiwano wartości innej niż '{ExpectedValue}', znaleziono wartość '{Element?.GetAttribute("value")}'");
+                Logger.Log($"Sukces: Oczekiwano wartości innej niż '{ExpectedValue}', znaleziono wartość '{_element?.GetAttribute("value")}'");
             }
             else
             {
-                throw new InavlidVerificationException($"Oczekiwano wartości innej niż '{ExpectedValue}', znaleziono wartość '{Element?.GetAttribute("value")}'");
+                throw new InavlidVerificationException($"Oczekiwano wartości innej niż '{ExpectedValue}', znaleziono wartość '{_element?.GetAttribute("value")}'");
             }
         }
 
         private void AssertValueIs()
         {
-            bool isValueEqualToExpected = WaitForAndCheckCondtition(driver => Element?.GetAttribute("value") == ExpectedValue);
+            bool isValueEqualToExpected = WaitForAndCheckCondtition(driver => _element?.GetAttribute("value") == ExpectedValue);
             if (isValueEqualToExpected)
             {
-                Logger.Log($"Sukces: Oczekiwano wartości '{ExpectedValue}', znaleziono wartość '{Element?.GetAttribute("value")}'");
+                Logger.Log($"Sukces: Oczekiwano wartości '{ExpectedValue}', znaleziono wartość '{_element?.GetAttribute("value")}'");
             }
             else
             {
-                throw new InavlidVerificationException($"Oczekiwano wartości '{ExpectedValue}', znaleziono wartość '{Element?.GetAttribute("value")}'");
+                throw new InavlidVerificationException($"Oczekiwano wartości '{ExpectedValue}', znaleziono wartość '{_element?.GetAttribute("value")}'");
             }
         }
 

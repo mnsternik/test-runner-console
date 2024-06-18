@@ -4,7 +4,7 @@ namespace TestRunnerConsole
 {
     public class ChangeContextStep(GenericStep step) : Step(step.Name, step.ActionType, step.ElementXPath, step.ElementId, step.BackupScenarioPath)
     {
-        public string ContextId { get; set; } = step.ContextId ?? "";
+        public string ContextId { get; set; } = step.ContextId ?? string.Empty;
 
         public override void HandleAction()
         {
