@@ -4,7 +4,11 @@ namespace TestRunnerConsole
     {
         public override void HandleAction()
         {
-            UserInputUtility.GetConfirmationFromUser(); 
+            bool shouldContiniue = UserInputUtility.GetConfirmationFromUser(); 
+            if (!shouldContiniue)
+            {
+                throw new FailedStepException("Anulowano dalsze wykonywanie scenariusza testowego.");
+            }
         }
     }
 }

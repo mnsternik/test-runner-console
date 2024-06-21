@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\utilities",
+    "\\utilities\\Config",
+    "\\utilities\\Step",
+    "\\utilities\\TestRunner",
+    "\\utilities\\TestScenario"
+  ],
+  "SelectedNode": "\\utilities\\Config\\Config.cs",
+  "PreviewInSolutionExplorer": false
+}
