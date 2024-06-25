@@ -6,7 +6,7 @@ namespace TestRunnerConsole
     {
         private static List<Step> Steps { get; set; } = new List<Step>();
         public static FirefoxDriver? Driver { get; set; }
-        private static int _stepCounter = 0;
+        private static int _stepCounter = 1;
 
 
         // Inicalizacja WebDriver'a
