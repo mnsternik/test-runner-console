@@ -8,7 +8,8 @@ class Program
         {   
             ConfigManager.InitConfig(); 
             Logger.InitLogger(); 
-            TestRunner.Run(Config.TestScenarioPath); 
+            TestScenario ts = TestScenario.LoadScenario(Config.TestScenarioPath); 
+            TestRunner.Run(ts); 
         }
         catch (FailedStepException e)
         {
