@@ -44,7 +44,8 @@ namespace TestRunnerConsole
         {
             if (!string.IsNullOrEmpty(BackupScenarioPath))
             {
-                TestRunner.Run(BackupScenarioPath);
+                TestScenario ts = TestScenario.LoadScenario(BackupScenarioPath);
+                TestRunner.Run(ts);
             }
             else
             {
