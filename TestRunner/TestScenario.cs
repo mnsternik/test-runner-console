@@ -2,7 +2,7 @@ namespace TestRunnerConsole
 {
     public class TestScenario
     {
-        public string Name {get; set; } = "";
+        public string Name {get; set; } = string.Empty;
         public GenericStep[] Steps { get; set; } = Array.Empty<GenericStep>(); 
 
         public static TestScenario LoadScenario(string path)

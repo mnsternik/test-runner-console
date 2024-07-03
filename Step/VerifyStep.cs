@@ -3,7 +3,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace TestRunnerConsole
 {
-    public class VerifyStep(GenericStep step) : Step(step.Name, step.ActionType, step.ElementXPath, step.ElementId, step.BackupScenarioPath)
+    public class VerifyStep(GenericStep step) : Step(step.Name, step.Action, step.ElementXPath, step.ElementId, step.BackupScenarioPath)
     {
         public string CheckType { get; set; } = step.CheckType ?? string.Empty;
         public string ExpectedValue { get; set; } = step.ExpectedValue ?? string.Empty;

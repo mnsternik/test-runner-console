@@ -18,7 +18,7 @@ namespace TestRunnerConsole
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Config.ElementWaitingTimeout); // Ustawienie czekania na nieznalezione elementy
         }
 
-        public static void Run(string testScenarioPath)
+        public static void Run(string testScenarioPath) // run powinno otrzymywać object TestScenaeio a nie ścieżke do pliku
         {
             TestScenario ts = TestScenario.LoadScenario(testScenarioPath);
 
@@ -49,7 +49,7 @@ namespace TestRunnerConsole
 
         private static Step TransformGenericIntoSpecifedStep(GenericStep step)
         {
-            return step.ActionType switch
+            return step.Action switch
             {
                 "navigate" => new NavigateStep(step),
                 "click" => new ClickStep(step),
@@ -58,7 +58,7 @@ namespace TestRunnerConsole
                 "iframe-change" => new ChangeContextStep(step),
                 "manual" => new ManualStep(step),
                 "write" or "write-login" or "write-password" => new WriteStep(step),
-                _ => throw new Exception($"Nieprawidłowy rodzaj akcji ActionType: '{step.ActionType}'"),
+                _ => throw new InavlidStepParameterException($"Nieprawidłowy rodzaj akcji ActionType: '{step.Action}'"),
             };
         }
     }

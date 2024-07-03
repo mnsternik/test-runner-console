@@ -14,7 +14,7 @@ namespace TestRunnerConsole
         {
             try
             {
-                Logger.Log($"{stepCounter}. Wykonywanie kroku: {Name}");
+                Logger.Log($"Wykonywanie kroku {stepCounter}: {Name}");
                 HandleAction();
                 Logger.Log($"{Name} -> OK", true);
             }

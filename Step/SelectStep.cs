@@ -3,10 +3,10 @@ using OpenQA.Selenium.Support.UI;
 
 namespace TestRunnerConsole
 {
-    public class SelectStep(GenericStep step) : Step(step.Name, step.ActionType, step.ElementXPath, step.ElementId, step.BackupScenarioPath)
+    public class SelectStep(GenericStep step) : Step(step.Name, step.Action, step.ElementXPath, step.ElementId, step.BackupScenarioPath)
     {
-        public string OptionType { get; set; } = step.OptionType ?? "";
-        public string Value { get; set; } = step.Value ?? "";
+        public string OptionType { get; set; } = step.OptionType ?? string.Empty;
+        public string  Value { get; set; } = step.Value ?? string.Empty;
 
         public override void HandleAction()
         {
