@@ -2,7 +2,7 @@ namespace TestRunnerConsole
 {
     public class GenericStep
     {
-        public string ActionType { get; set; } = string.Empty;
+        public string Action { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string? Url { get; set; } = string.Empty;
         public string? ElementId { get; set; } = string.Empty;
