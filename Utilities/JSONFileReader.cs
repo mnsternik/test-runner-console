@@ -11,7 +11,6 @@ namespace TestRunnerConsole
             {
                 throw new Exception($"Brak pliku lub zawartości w pliku: {filePath}");
             }
-
             T deserializedObject = JsonConvert.DeserializeObject<T>(content) ?? throw new Exception("Wystąpił błąd podczas deserializacji pliku JSON.");
             return deserializedObject;
         }
@@ -20,9 +19,8 @@ namespace TestRunnerConsole
         {
             if (!File.Exists(filePath))
             {
-                throw new Exception($"Nie znaleziono pliku ze scenariuszem testowym. Wskazano lokalizacje {filePath}.");
+                throw new FileNotFoundException($"Nie znaleziono pliku ze scenariuszem testowym. Wskazano lokalizacje {filePath}.");
             }
-
             return File.ReadAllText(filePath);
         }
     }
