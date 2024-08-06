@@ -8,6 +8,12 @@ namespace TestRunnerConsole
         public static TestScenario LoadScenario(string path)
         {
             TestScenario ts = JSONFileReader.Deserialize<TestScenario>(path);
+            ValidateScenario(ts); 
+            return ts;
+        }
+
+        private static void ValidateScenario(TestScenario ts)
+        {
             if (ts == null)
             {
                 throw new InvalidScenarioException("Scenariusz testowy jest pusty");
@@ -18,14 +24,8 @@ namespace TestRunnerConsole
             }
             else if (string.IsNullOrEmpty(ts.Name))
             {
-                throw new InvalidScenarioException("Scenariusz testowy nie posiada nazwy, należy dospiać wartość w atrybucie 'name' w pliku scenariuszowym json");
+                throw new InvalidScenarioException("Scenariusz testowy nie posiada nazwy, należy dospiać wartość w atrybucie 'name' w pliku scenariuszowym");
             }
-            return JSONFileReader.Deserialize<TestScenario>(path);
         }
-    }
-
-    public class InvalidScenarioException : Exception
-    {
-        public InvalidScenarioException(string message) : base(message) { }
     }
 }
