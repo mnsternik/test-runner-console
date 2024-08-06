@@ -18,11 +18,11 @@ namespace TestRunnerConsole
 
             if (!File.Exists(config.DriverPath))
             {
-                throw new Exception($"Nie znaleziono pliku geckodriver.exe w lokalizacji {config.DriverPath}");
+                throw new FileNotFoundException($"Nie znaleziono pliku geckodriver.exe w lokalizacji {config.DriverPath}");
             }
             if (!File.Exists(config.FirefoxPath))
             {
-                throw new Exception($"Nie znaleziono pliku firefox.exe w lokalizacji {config.FirefoxPath}");
+                throw new FileNotFoundException($"Nie znaleziono pliku firefox.exe w lokalizacji {config.FirefoxPath}");
             }
 
             Config.DriverPath = config.DriverPath; 
