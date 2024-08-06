@@ -7,7 +7,7 @@ namespace TestRunnerConsole
             bool shouldContiniue = UserInputUtility.GetConfirmationFromUser(); 
             if (!shouldContiniue)
             {
-                throw new FailedStepException("Anulowano dalsze wykonywanie scenariusza testowego.");
+                throw new FailedStepException("Stwierdzono błąd podczas kroku wykonywanego ręcznie.");
             }
         }
     }

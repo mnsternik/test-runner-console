@@ -8,11 +8,6 @@ namespace TestRunnerConsole
 
         public override void HandleAction()
         {
-            HandleChangeContext();
-        }
-
-        private void HandleChangeContext()
-        {
             if (ContextId == "default")
             {
                 TestRunner.Driver?.SwitchTo().DefaultContent();

@@ -18,20 +18,10 @@ namespace TestRunnerConsole
                 HandleAction();
                 Logger.Log($"{Name} -> OK", true);
             }
-            catch (InavlidVerificationException e)
+            catch (TestRunnerException ex)
             {
-                Logger.Log($"Wystąpił błąd podczas weryfikacji. {e.Message}", true);
-                HandleFailure(stepCounter, e.Message);
-            }
-            catch (NoSuchElementException e)
-            {
-                Logger.Log($"Wystąpił błąd - nie znaleziono elementu na stronie. {e.Message}", true);
-                HandleFailure(stepCounter, e.Message);
-            }
-            catch (Exception e)
-            {
-                Logger.Log($"Wystąpił nieoczekiwany błąd: {e.Message}", true);
-                HandleFailure(stepCounter, e.Message);
+                Logger.Log(ex.Message, true);
+                HandleFailure(stepCounter, ex.Message);
             }
         }
 
@@ -60,7 +50,7 @@ namespace TestRunnerConsole
                         break;
                     case "N": // dodaj błąd do posumowania i zakończ działanie programu 
                         Summary.AddFailedStep(stepCounter, message); 
-                        throw new FailedStepException("Wykonywanie scenariusza zostało przerwane.");
+                        throw new FailedStepException("Wykonywanie scenariusza zostało przerwane."); // how to catch it? Maybe it should be other type of exception
                 }
             }
         }
@@ -69,7 +59,7 @@ namespace TestRunnerConsole
         {
             if (TestRunner.Driver == null)
             {
-                throw new Exception("Driver nie został poprawnie zaninicjowany.");
+                throw new DriverInitException("Driver nie został poprawnie zaninicjowany.");
             }
 
             if (!string.IsNullOrEmpty(ElementXPath))
@@ -82,18 +72,8 @@ namespace TestRunnerConsole
             }
             else
             {
-                throw new InavlidStepParameterException($"Wykryto próbe odnalezienia elementu bez podania jego ID lub XPath - potrzebna weryfikacja poprawności scenariusza testowego.");
+                throw new InvalidStepParameterException($"Wykryto próbe odnalezienia elementu bez podania jego ID lub XPath - potrzebna weryfikacja poprawności scenariusza testowego.");
             }
         }
-    }
-
-    public class InavlidStepParameterException : Exception
-    {
-        public InavlidStepParameterException(string message) : base(message) { }
-    }
-
-    public class FailedStepException : Exception
-    {
-        public FailedStepException(string message) : base(message) { }
     }
 }

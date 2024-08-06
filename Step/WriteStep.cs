@@ -1,5 +1,3 @@
-using OpenQA.Selenium;
-
 namespace TestRunnerConsole
 {
     public class WriteStep(GenericStep step) : Step(step.Name, step.Action, step.ElementXPath, step.ElementId, step.BackupScenarioPath)
@@ -8,14 +6,8 @@ namespace TestRunnerConsole
 
         public override void HandleAction()
         {
-            HandleWrite();
-        }
-
-        private void HandleWrite()
-        {
-            IWebElement element = GetElement();
+            var element = GetElement();
             string targetValue;
-
             switch (ActionType)
             {
                 case "write-password":
@@ -28,7 +20,6 @@ namespace TestRunnerConsole
                     targetValue = Value;
                     break;
             }
-
             element.Clear();
             element.SendKeys(targetValue);
         }

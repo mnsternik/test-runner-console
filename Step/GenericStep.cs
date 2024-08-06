@@ -26,7 +26,7 @@ namespace TestRunnerConsole
                 "iframe-change" => new ChangeContextStep(step),
                 "manual" => new ManualStep(step),
                 "write" or "write-login" or "write-password" => new WriteStep(step),
-                _ => throw new InavlidStepParameterException($"Nieprawidłowy rodzaj akcji ActionType: '{step.Action}'"),
+                _ => throw new InvalidStepParameterException($"Nieprawidłowy rodzaj akcji ActionType: '{step.Action}'"),
             };
         }
     }

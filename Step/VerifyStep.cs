@@ -36,7 +36,7 @@ namespace TestRunnerConsole
                     AssertValueIsNot();
                     break;
                 default:
-                    throw new InavlidStepParameterException($"Niepoprawna wartość paramteru CheckType: '{CheckType}'");
+                    throw new InvalidStepParameterException($"Niepoprawna wartość paramteru CheckType: '{CheckType}'");
             }
         }
 
@@ -54,11 +54,7 @@ namespace TestRunnerConsole
 
         private void AssertTextIsNot()
         {
-            bool isTextValid = WaitForAndCheckCondtition(driver =>
-                _element?.Text != ExpectedValue
-                && !string.IsNullOrEmpty(_element?.Text)
-            );
-
+            bool isTextValid = WaitForAndCheckCondtition(driver => _element?.Text != ExpectedValue && !string.IsNullOrEmpty(_element?.Text));
             if (isTextValid)
             {
                 Logger.Log($"Sukces: Oczekiwano tekstu innego niż '{ExpectedValue}', znaleziono tekst '{_element?.Text}'");
@@ -131,10 +127,5 @@ namespace TestRunnerConsole
             return GetElement().FindElements(By.TagName("option")).FirstOrDefault(option => option.Selected);
         }
 
-    }
-
-    public class InavlidVerificationException : Exception
-    {
-        public InavlidVerificationException(string message) : base(message) { }
     }
 }
